@@ -13,30 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import pandas as pd
-import requests
+from trading_calendars import get_calendar
 
+def get_benchmark_returns(symbol, first_date, last_date):
+    cal = get_calendar('NYSE')
+    
+    dates = cal.sessions_in_range(first_date, last_date)
 
-def get_benchmark_returns(symbol):
-    """
-    Get a Series of benchmark returns from IEX associated with `symbol`.
-    Default is `SPY`.
+    data = pd.DataFrame(0.0, index=dates, columns=['close'])
+    data = data['close']
 
-    Parameters
-    ----------
-    symbol : str
-        Benchmark symbol for which we're getting the returns.
+    return data.sort_index().iloc[1:]
 
-    The data is provided by IEX (https://iextrading.com/), and we can
-    get up to 5 years worth of data.
-    """
-    r = requests.get(
-        'https://api.iextrading.com/1.0/stock/{}/chart/5y'.format(symbol)
-    )
-    data = r.json()
-
-    df = pd.DataFrame(data)
-
-    df.index = pd.DatetimeIndex(df['date'])
-    df = df['close']
-
-    return df.sort_index().tz_localize('UTC').pct_change(1).iloc[1:]
