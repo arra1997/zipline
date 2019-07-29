@@ -8,8 +8,8 @@ perf.head()
 alg_returns = perf.algorithm_period_return
 
 ax1 = plt.subplot(211)
-perf.portfolio_value.plot(ax=ax1)
-ax1.set_ylabel('Portfolio Value')
+alg_returns.plot(ax=ax1)
+ax1.set_ylabel('Returns')
 plt.savefig('performance.png')
 
 
