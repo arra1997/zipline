@@ -76,8 +76,8 @@ def get_treasury_data(start_date, end_date):
         index_col=0,
     ).loc[
         start_date:end_date
-    ].dropna(
-        how='all'
+    ].fillna(
+        how='ffill'
     ).rename(
         columns=parse_treasury_csv_column
     ).tz_localize('UTC') * 0.01  # Convert from 2.57% to 0.0257.

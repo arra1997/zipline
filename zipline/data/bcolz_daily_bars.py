@@ -305,29 +305,29 @@ class BcolzDailyBarWriter(object):
             asset_sessions = sessions[
                 sessions.slice_indexer(asset_first_day, asset_last_day)
             ]
-            #assert len(table) == len(asset_sessions), (
-            #    'Got {} rows for daily bars table with first day={}, last '
-            #    'day={}, expected {} rows.\n'
-            #    'Missing sessions: {}\n'
-            #    'Extra sessions: {}'.format(
-            #        len(table),
-            #        asset_first_day.date(),
-            #        asset_last_day.date(),
-            #        len(asset_sessions),
-            #        asset_sessions.difference(
-            #            to_datetime(
-            #                np.array(table['day']),
-            #                unit='s',
-            #                utc=True,
-            #            )
-            #        ).tolist(),
-            #        to_datetime(
-            #            np.array(table['day']),
-            #            unit='s',
-            #           utc=True,
-            #        ).difference(asset_sessions).tolist(),
-            #    )
-            #)
+            assert len(table) == len(asset_sessions), (
+                'Got {} rows for daily bars table with first day={}, last '
+                'day={}, expected {} rows.\n'
+                'Missing sessions: {}\n'
+                'Extra sessions: {}'.format(
+                    len(table),
+                    asset_first_day.date(),
+                    asset_last_day.date(),
+                    len(asset_sessions),
+                    asset_sessions.difference(
+                        to_datetime(
+                            np.array(table['day']),
+                            unit='s',
+                            utc=True,
+                        )
+                    ).tolist(),
+                    to_datetime(
+                        np.array(table['day']),
+                        unit='s',
+                        utc=True,
+                    ).difference(asset_sessions).tolist(),
+                )
+            )
 
             # Calculate the number of trading days between the first date
             # in the stored data and the first date of **this** asset. This
