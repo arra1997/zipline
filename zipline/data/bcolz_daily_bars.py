@@ -305,8 +305,8 @@ class BcolzDailyBarWriter(object):
             asset_sessions = sessions[
                 sessions.slice_indexer(asset_first_day, asset_last_day)
             ]
-            assert len(table) == len(asset_sessions), (
-                'Got {} rows for daily bars table with first day={}, last '
+            if len(table) != len(asset_sessions):
+                print('Got {} rows for daily bars table with first day={}, last '
                 'day={}, expected {} rows.\n'
                 'Missing sessions: {}\n'
                 'Extra sessions: {}'.format(
@@ -326,8 +326,8 @@ class BcolzDailyBarWriter(object):
                         unit='s',
                         utc=True,
                     ).difference(asset_sessions).tolist(),
-                )
-            )
+                ))
+        
 
             # Calculate the number of trading days between the first date
             # in the stored data and the first date of **this** asset. This
