@@ -15,7 +15,7 @@ numpy==1.11.3
 requests-file==1.4.1
 
 # for requests
-certifi==2018.8.24
+certifi==2022.12.7
 chardet==3.0.4
 idna==2.7
 urllib3==1.23
